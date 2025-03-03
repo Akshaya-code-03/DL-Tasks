@@ -16,14 +16,12 @@ WORKDIR /app/yolov5
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy inference script and image directories
-WORKDIR /app
-COPY inference.py .
-COPY images/ images/
-COPY output/ output/
+# Copy inference script and images folder
+COPY inference.py /app/yolov5/inference.py
+COPY images/ /app/yolov5/images/
 
-# Ensure output folder exists
-RUN mkdir -p output
+# Ensure output folder exists inside the container
+RUN mkdir -p /app/yolov5/output
 
 # Run inference when the container starts
-ENTRYPOINT ["python", "inference.py"]
+ENTRYPOINT ["python", "/app/yolov5/inference.py"]
